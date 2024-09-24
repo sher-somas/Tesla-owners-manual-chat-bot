@@ -31,8 +31,8 @@ The bot is hosted using **Flask**, and the setup integrates **ngrok** and **Twil
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/sher-somas/tesla-manual-chat-bot.git
-   cd tesla-manual-chat-bot
+   git clone https://github.com/sher-somas/Tesla-owners-manual-chat-bot.git
+   cd Tesla-owners-manual-chat-bot
    ```
 
 2. Install the required dependencies:
