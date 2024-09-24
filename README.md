@@ -30,23 +30,23 @@ The bot is hosted using **Flask**, and the setup integrates **ngrok** and **Twil
 ### Installation
 
 1. Clone the repository:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/sher-somas/tesla-manual-chat-bot.git
    cd tesla-manual-chat-bot
-   \`\`\`
+   ```
 
 2. Install the required dependencies:
-   \`\`\`bash
+   ```bash
    pip install -r requirements.txt
-   \`\`\`
+   ```
 
 3. Configure your environment variables in a `.env` file:
-   \`\`\`
+   ```
    TWILIO_ACCOUNT_SID=<your_twilio_account_sid>
    TWILIO_AUTH_TOKEN=<your_twilio_auth_token>
    PINECONE_API_KEY=<your_pinecone_api_key>
    OPENAI_API_KEY=<your_openai_api_key>
-   \`\`\`
+   ```
 
 ### Ingest the Tesla Manuals
 
@@ -54,9 +54,9 @@ Before you can query the Tesla car manuals, you need to process and upload them 
 
 1. Place all the PDF manuals in a folder named `manuals`.
 2. Run the ingestion script:
-   \`\`\`bash
+   ```bash
    python ingest.py --folder_name manuals
-   \`\`\`
+   ```
 
 This script will:
 - Load the Tesla manuals from the specified folder.
@@ -97,14 +97,14 @@ This file sets up a Flask API that listens for incoming WhatsApp messages via Tw
 ## Running the API with Ngrok and Twilio
 
 1. Start the Flask server locally:
-   \`\`\`bash
+   ```bash
    python app.py
-   \`\`\`
+   ```
 
 2. Expose the server using ngrok:
-   \`\`\`bash
+   ```bash
    ngrok http 5000
-   \`\`\`
+   ```
 
    This will generate a public URL (e.g., `http://your-ngrok-url.ngrok.io`) that you can use for Twilio.
 
