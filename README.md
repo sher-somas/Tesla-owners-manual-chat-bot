@@ -1,5 +1,5 @@
 
-# Tesla WhatsApp Chatbot using LangChain, Pinecone, and Twilio
+# WhatsApp Chatbot to answer questions from Tesla car manuals using LangChain, Pinecone, and Twilio
 
 ---
 
