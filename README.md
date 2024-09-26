@@ -5,16 +5,17 @@
 
 ## Project Overview
 
-This repository contains two core Python files, `ingest.py` and `app.py`, designed to enable a **WhatsApp chatbot** that can intelligently answer questions about Tesla car manuals. The bot uses a **Retrieval-Augmented Generation (RAG)** approach to fetch information from Tesla's manuals and respond to user queries via WhatsApp.
+This repository contains three core Python files, `ingest.py`, `app.py`, and  `main.py` designed to enable a **WhatsApp chatbot** that can intelligently answer questions about Tesla car manuals. The bot uses a **Retrieval-Augmented Generation (RAG)** approach to fetch information from Tesla's manuals and respond to user queries via WhatsApp.
 
-The bot is hosted using **Flask**, and the setup integrates **ngrok** and **Twilio** for receiving and sending messages. **Pinecone** is used for vector storage of Tesla manual chunks, and **OpenAI** is used for embedding generation. Finally, **LangChain** is leveraged for retrieval and response generation from the documents.
+The bot is hosted using **FastAPI**, and the setup integrates **ngrok** for local development and testing and **Twilio** for receiving and sending messages. **Pinecone** is used for vector storage of Tesla manual chunks, and **OpenAI** is used for embedding generation. Finally, **LangChain** is leveraged for retrieval and response generation from the documents.
 
 ---
 
 ## How It Works
 
 - **ingest.py**: Handles loading, chunking, and embedding Tesla manuals into **Pinecone**.
-- **app.py**: Hosts the API that Twilio interacts with via WhatsApp, which retrieves and answers queries by leveraging the embeddings stored in Pinecone.
+- **app.py**: LangChain that utilizes meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo LLM for generating responses.
+- **main.py**: Hosts the backend with endpoints catering to whatsapp as well as web based requests.
 
 ---
 
@@ -23,9 +24,10 @@ The bot is hosted using **Flask**, and the setup integrates **ngrok** and **Twil
 ### Prerequisites:
 - Python 3.8+
 - Twilio account and WhatsApp sandbox setup
-- Ngrok for exposing your local server to the internet
+- Ngrok for exposing your local server and development.
 - Pinecone API key
 - OpenAI API key
+- TogetherAI API key.
 
 ### Installation
 
@@ -46,6 +48,7 @@ The bot is hosted using **Flask**, and the setup integrates **ngrok** and **Twil
    TWILIO_AUTH_TOKEN=<your_twilio_auth_token>
    PINECONE_API_KEY=<your_pinecone_api_key>
    OPENAI_API_KEY=<your_openai_api_key>
+   TOGETHER_API_KEY=<together_api_key>
    ```
 
 ### Ingest the Tesla Manuals
@@ -82,7 +85,7 @@ This file is responsible for preparing the Tesla manuals for retrieval. The key 
 
 ### 2. `app.py` - Hosting the API and Twilio Integration
 
-This file sets up a Flask API that listens for incoming WhatsApp messages via Twilio and responds to them using the RAG approach.
+This file parses the incoming WhatsApp messages via Twilio and responds to them using the RAG approach.
 
 - **RAG Pipeline**: The RAG pipeline in `app.py` works as follows:
   1. A user asks a question on WhatsApp.
@@ -90,7 +93,7 @@ This file sets up a Flask API that listens for incoming WhatsApp messages via Tw
   3. The retrieved chunks are combined with the question and passed to a language model (`meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo`) that generates a human-readable answer.
   4. The answer is returned to the user via Twilio's messaging API.
 
-- **Twilio Integration**: The Flask app defines an endpoint (`/answer`) that Twilio will hit whenever a new WhatsApp message is received. The user's query is processed, the chatbot generates a response, and the response is sent back to the user on WhatsApp.
+- **Twilio Integration**: The FastAPI app defines an endpoint (`/question`) for web based requests and (`/question/whatsapp`) for whatsapp requests that Twilio will hit whenever a new WhatsApp message is received. The user's query is processed, the chatbot generates a response, and the response is sent back to the user on WhatsApp.
 
 ---
 
@@ -98,10 +101,10 @@ This file sets up a Flask API that listens for incoming WhatsApp messages via Tw
 
 1. Start the Flask server locally:
    ```bash
-   python app.py
+   uvircorn main:app --reload
    ```
 
-2. Expose the server using ngrok:
+2. Expose the server using ngrok for testing locally:
    ```bash
    ngrok http 5000
    ```
