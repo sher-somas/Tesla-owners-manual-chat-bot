@@ -8,5 +8,5 @@ openai==1.49.0
 pinecone==5.3.1
 pydantic
 python-dotenv==1.0.1
-tqdm==4.64.0
+tqdm
 twilio==9.3.2
