@@ -6,4 +6,4 @@ load_dotenv()
 
 def send_message(llm_output):
     twilio_client.messages.create(from_="whatsapp:+14155238886",
-                                        body=llm_output, to="whatsapp:+4915219432029")
+                                        body=llm_output, to="whatsapp:<>") # add your phone number here with the country code and remove <>
