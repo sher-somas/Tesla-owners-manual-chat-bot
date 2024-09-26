@@ -6,7 +6,7 @@ from app import invoke_chain
 from whatsapp import send_message
 
 app = FastAPI(
-    title="Tesla owner's manual",
+    title="Tesla owner's manual WhatApp Chatbot",
     version="0.0.1",
     contact={
         "name": "Shreyas Somashekar",
