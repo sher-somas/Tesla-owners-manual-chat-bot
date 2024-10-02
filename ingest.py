@@ -1,4 +1,4 @@
-
+from langchain_community.vectorstores import Pinecone
 import glob
 from tqdm import tqdm
 from dotenv import load_dotenv
@@ -7,7 +7,16 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from pinecone import Pinecone, ServerlessSpec
 from openai import OpenAI
+# from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
+import warnings
 
+warnings.filterwarnings(action="ignore", category=UserWarning)
+
+
+embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2",
+                                             model_kwargs={'device': 'cpu'},
+                                             encode_kwargs={'normalize_embeddings': False})
 
 
 def list_pdfs(args):
@@ -51,8 +60,12 @@ def get_openai_embedding(text, openai_client):
     )
     return response.data[0].embedding
 
+def get_huggingface_embedding(text):
+    
+    return embeddings_model.embed_query(text)
+    
 
-def initialize_pinecone(index_name: str):
+def initialize_pinecone(index_name: str, embedding_dimension: int = 768):
     """
     Initialize pinecone client and list all the indexes. 
 
@@ -66,7 +79,7 @@ def initialize_pinecone(index_name: str):
         existing_indexes.append(indexes["name"])
 
     if index_name not in existing_indexes:
-        pinecone_client.create_index(index_name, dimension=1536, 
+        pinecone_client.create_index(index_name, dimension=embedding_dimension, 
                                     spec=ServerlessSpec(cloud='aws',
                                                         region='us-east-1'))
     
@@ -76,13 +89,14 @@ def initialize_pinecone(index_name: str):
 def upload_chunks_to_pinecone(chunks, index_name):
 
     pinecone_client = initialize_pinecone(index_name)
-    openai_client = OpenAI()
+    # openai_client = OpenAI()
 
     for i, chunk in tqdm(enumerate(chunks),desc="uploading to pinecone"):
-        response = openai_client.embeddings.create(input=chunk.page_content,
-                                                   model="text-embedding-ada-002",
-                                                   encoding_format="float")
-        embedding = response.data[0].embedding
+        # response = openai_client.embeddings.create(input=chunk.page_content,
+        #                                            model="text-embedding-ada-002",
+        #                                            encoding_format="float")
+        # embedding = response.data[0].embedding
+        embedding = get_huggingface_embedding(chunk.page_content)
         pinecone_index = pinecone_client.Index(index_name)
         pinecone_index.upsert(vectors=[(f"chunk-{i}", embedding, {"chunk": chunk.page_content})], namespace='manual')
         
@@ -97,11 +111,12 @@ def query_pinecone(pinecone_client,openai_client, query_sample):
 if __name__ == "__main__":
 
     parser = ArgumentParser()
-    parser.add_argument("--folder_name", type=str, default='manuals', help="Folder containing the manuals")
+    parser.add_argument("--folder_name", type=str, default='manuals', help="Folder containing the manuals", required=True)
+    parser.add_argument("--index_name", type=str, default='tesla-hf', help="Index name in Pinecone", required=True)
     args = parser.parse_args()
     
     load_dotenv()
-    openai_client =OpenAI()
+    # openai_client =OpenAI()
     
     print("-" * 30, "loading pdfs", "-" * 30, "\n")
     list_of_pdfs = list_pdfs(args)
@@ -111,9 +126,9 @@ if __name__ == "__main__":
     chunks = get_chunks_from_pdfs(loaded_pdfs)
     
     print("-" * 30, "uploading chunks to pinecone", "-" * 30, "\n")
-    upload_chunks_to_pinecone(chunks, 'tesla-manuals')
+    upload_chunks_to_pinecone(chunks, args.index_name)
     
-    pinecone_client = initialize_pinecone('tesla-manuals')
+    pinecone_client = initialize_pinecone(args.index_name)
     query = "explain ludacrious mode"
-    query_pinecone(pinecone_client, openai_client, query)
+    # query_pinecone(pinecone_client, openai_client, query)
     
