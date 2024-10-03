@@ -137,6 +137,22 @@ This file parses the incoming WhatsApp messages via Twilio and responds to them 
 
 ---
 
+## Considering the right RAG approach.
+
+While working LLMs which have a knowledge cut-off of more than an year, it is important to consider the right RAG approach.
+
+In order to evaluate which is the best embedding model to consider, chunking strategy, chunk size/overlap and the embedding dimension, I highly recommend using [vectorize.io](https://vectorize.io/).
+
+This platform evaluates 100+ embedding models and provides a comprehensive analysis of their performance. It also offers a visual representation of the data, making it easier to compare and choose the best model for your specific use case.
+
+Check out the screenshots below.
+
+![](images/Screenshot-4.jpeg)
+![](images/Screenshot-5.jpeg)
+
+It is a very simple platform to use and I highly recommend it to anyone who is working with LLMs and RAG before making a decision.
+
+
 ## Conclusion
 
-This project demonstrates how to combine multiple technologies such as Pinecone, LangChain, Twilio, and OpenAI to build an intelligent WhatsApp chatbot. The chatbot can retrieve and respond to questions about Tesla manuals, offering a useful and friendly interface for users to interact with Tesla's documentation.
+This project demonstrates how to implement RAG based approach using Pinecone, LangChain, Twilio, and OpenAI to build an intelligent WhatsApp chatbot. The chatbot can retrieve and respond to questions about Tesla manuals, offering a useful and friendly interface for users to interact with Tesla's documentation.
