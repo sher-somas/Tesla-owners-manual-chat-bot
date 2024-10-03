@@ -143,7 +143,7 @@ While working LLMs which have a knowledge cut-off of more than an year, it is im
 
 In order to evaluate which is the best embedding model to consider, chunking strategy, chunk size/overlap and the embedding dimension, I highly recommend using [vectorize.io](https://vectorize.io/).
 
-This platform evaluates 100+ embedding models and provides a comprehensive analysis of their performance. It also offers a visual representation of the data, making it easier to compare and choose the best model for your specific use case.
+This platform evaluates many embedding models and provides a comprehensive analysis of their performance. It also offers a visual representation of the data, making it easier to compare and choose the best model for your specific use case.
 
 Check out the screenshots below.
 
