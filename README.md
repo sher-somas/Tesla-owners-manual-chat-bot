@@ -11,6 +11,24 @@ The bot is hosted using **FastAPI**, and the setup integrates **ngrok** for loca
 
 ---
 
+## Considering the right RAG approach.
+
+While working LLMs which have a knowledge cut-off of more than an year, it is important to consider the right RAG approach.
+
+In order to evaluate which is the best embedding model to consider, chunking strategy, chunk size/overlap and the embedding dimension, I highly recommend using [vectorize.io](https://vectorize.io/).
+
+This platform evaluates many embedding models and provides a comprehensive analysis of their performance. It also offers a visual representation of the data, making it easier to compare and choose the best model for your specific use case.
+
+Check out the screenshots below.
+
+![](images/Screenshot-4.jpeg)
+![](images/Screenshot-5.jpeg)
+
+It is a very simple platform to use and I highly recommend it to anyone who is working with LLMs and RAG before making a decision.
+
+
+---
+
 ## How It Works
 
 - **ingest.py**: Handles loading, chunking, and embedding Tesla manuals into **Pinecone**.
@@ -136,21 +154,6 @@ This file parses the incoming WhatsApp messages via Twilio and responds to them 
 ![](images/ngrok.jpeg)
 
 ---
-
-## Considering the right RAG approach.
-
-While working LLMs which have a knowledge cut-off of more than an year, it is important to consider the right RAG approach.
-
-In order to evaluate which is the best embedding model to consider, chunking strategy, chunk size/overlap and the embedding dimension, I highly recommend using [vectorize.io](https://vectorize.io/).
-
-This platform evaluates many embedding models and provides a comprehensive analysis of their performance. It also offers a visual representation of the data, making it easier to compare and choose the best model for your specific use case.
-
-Check out the screenshots below.
-
-![](images/Screenshot-4.jpeg)
-![](images/Screenshot-5.jpeg)
-
-It is a very simple platform to use and I highly recommend it to anyone who is working with LLMs and RAG before making a decision.
 
 
 ## Conclusion
