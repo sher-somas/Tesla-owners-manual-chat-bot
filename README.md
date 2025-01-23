@@ -1,4 +1,8 @@
+# WhatsApp Chatbot to answer questions from Tesla car manuals using LangChain, Pinecone, and Twilio
 
+To know more about this project please read this [blog](https://sher-somas.github.io/posts/2013/08/RAG-Chatbot/)
+
+<!-- 
 # WhatsApp Chatbot to answer questions from Tesla car manuals using LangChain, Pinecone, and Twilio
 
 ---
@@ -158,4 +162,4 @@ This file parses the incoming WhatsApp messages via Twilio and responds to them 
 
 ## Conclusion
 
-This project demonstrates how to implement RAG based approach using Pinecone, LangChain, Twilio, and OpenAI to build an intelligent WhatsApp chatbot. The chatbot can retrieve and respond to questions about Tesla manuals, offering a useful and friendly interface for users to interact with Tesla's documentation.
+This project demonstrates how to implement RAG based approach using Pinecone, LangChain, Twilio, and OpenAI to build an intelligent WhatsApp chatbot. The chatbot can retrieve and respond to questions about Tesla manuals, offering a useful and friendly interface for users to interact with Tesla's documentation. -->
